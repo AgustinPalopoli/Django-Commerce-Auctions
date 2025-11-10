@@ -10,12 +10,6 @@ This README explains how to set up and run the project, where to find the main p
 - Includes models for listings, bids, comments, categories and user watchlists.
 - Provides views and templates for listing index, create listing, view listing, category pages, watchlist, registration and login.
 
-## Quick facts / contract
-
-- Inputs: HTTP requests from a browser.
-- Outputs: HTML responses rendered with Django templates; DB stored in `db.sqlite3` (SQLite).
-- Error modes: missing migrations, missing dependencies, port conflicts when running dev server.
-
 ## Project layout (important files)
 
 - `manage.py` — Django management script (run server, migrations, tests).
@@ -27,10 +21,6 @@ This README explains how to set up and run the project, where to find the main p
   - `auctions/templates/auctions/` — HTML templates (index, create_listing, view_listing, watchlist, etc.).
   - `auctions/static/auctions/style.css` — styles.
 - `commerce/` — Django project settings and WSGI/ASGI entrypoints.
-
-## Requirements
-
-If the repository provides a `requirements.txt` at the project root, install from it. Otherwise, you need at least Python 3.8+ and Django.
 
 ## Setup (PowerShell)
 
@@ -76,12 +66,6 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-- To run tests (if tests exist):
-
-```powershell
-python manage.py test
-```
-
 - To collect static files (if you configure and use this step):
 
 ```powershell
@@ -103,18 +87,6 @@ Templates live in `templates/auctions/` and include:
 - `index.html`, `create_listing.html`, `view_listing.html`, `watchlist.html`, `category.html`, `login.html`, `register.html`, `layout.html` (base layout)
 
 Static CSS is in `static/auctions/style.css`.
-
-## Database and migrations
-
-- The project uses SQLite (`db.sqlite3`) by default. This is convenient for local development.
-- To reset the DB locally (destructive), you can remove `db.sqlite3` and run migrations again:
-
-```powershell
-Remove-Item db.sqlite3
-python manage.py migrate
-```
-
-(note: only do this in local/dev environments)
 
 ## Admin
 
