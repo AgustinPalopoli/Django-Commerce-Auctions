@@ -1,0 +1,20 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>Watchlist</h1>
+    {% for list in listing %}
+    <div>
+        <a href="{% url 'view_listing' list.id %}">
+            <div class="card">
+                <img src="{{ list.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ list.nameitem }}</h5>
+                    <p class="card-text">Category: {{ list.category}}</p>
+                    <p class="card-text">Listed by: {{ list.owner }}</p>
+                    <p class="card-text">Price: ${{ list.bid.bid }}</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+{% endblock %}

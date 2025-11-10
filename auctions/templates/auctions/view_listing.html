@@ -1,0 +1,69 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if message %}
+        <div class="alert alert-light" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+    <h2>{{ listing.nameitem }}</h2>
+    <img class="img-thumbnail" src="{{ listing.url }}">
+    <p style="margin:1vw 0px 0px 0px">Category: {{ listing.category }}</p>
+    <p style="margin:0px 0px 0px 0px">Owner: {{ listing.owner }}</p>
+    <p style="margin:0px 0px 0px 0px">Description:</p>
+    <div class="badge bg-light text-wrap" style="width: 100%;color:black;font-size:1.25vw;text-align: justify;margin-bottom:1vw">
+        {{ listing.description }}
+    </div>
+
+    {% if user.is_authenticated %}
+        <div>
+        {% if user in listing.watchlist.all %}
+            <form action ="{% url 'remove_watchlist' %}" method="post">
+            {% csrf_token %}
+                <button class="btn btn-light" type="submit" value="{{ listing.id }}" name="remove_watchlist">Remove from watchlist</button>
+            </form>
+        {% else %}
+            <form action ="{% url 'watchlist' %}" method="post">
+            {% csrf_token %}
+                <button class="btn btn-light" type="submit" value="{{ listing.id }}" name="add_watchlist">Add to watchlist</button>
+            </form>
+        {% endif %}
+        </div>
+        <div>
+            <p style="margin-top:1vw">Current bid: {{ listing.bid }}</p>
+            {% if listing.bid.user == user and listing.is_closed == True %}
+                <p>Congratulations you won the auction</p>
+            {% else %}
+                {% if user != listing.owner and listing.is_closed == False %}
+                    <form action ="{% url 'new_bid' %}" method="post">
+                    {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="number" name="newbid" min="{{ listing.bid }}" step="0.01" class="form-control" placeholder="Add new bid here"> 
+                            <button class="btn btn-dark" type="submit" value="{{ listing.id }}" name="id_bid" id="button-addon2">Bid</button>
+                        </div>
+                    </form>
+                    <form action ="{% url 'comment' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Add comment</span>
+                            <textarea name="new_comment" placeholder="Write here" maxlength="100" class="form-control"  rows="3"></textarea>
+                        </div>
+                        <button style="margin:-1vw 0vw 1vw 0vw" class="btn btn-light" type="submit" value="{{ listing.id }}" name="id_comment">Submit</button>
+                    </form>
+                {% endif %}
+                {% if user == listing.owner and listing.is_closed == False %}
+                    <form action ="{% url 'close_auction' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-light" type="submit" value="{{ listing.id }}" name="close">Close auction</button>
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+    <p style="margin:0%">Comments</p>
+    {% for comment in comments%}
+        <div class="badge bg-light text-wrap" style="width: 100%;color:black;font-size:1.25vw;margin-bottom:1vw">
+        {{ comment.writer }} : {{ comment.text }}
+        </div>
+    {% endfor %}
+{% endblock %}

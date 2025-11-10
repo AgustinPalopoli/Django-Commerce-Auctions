@@ -1,0 +1,33 @@
+body {
+    background: linear-gradient(to right,rgb(0, 0, 0), rgb(87, 87, 87));
+    padding: 2vw;
+    color: aliceblue;
+    font-family:  monospace;
+    
+}
+a{
+    color: aliceblue;
+}
+a:hover{
+    color: rgb(102, 102, 102);
+}
+a .card{
+    color: rgb(0, 0, 0);
+}
+a .card:hover{
+    color: rgb(131, 131, 131);
+}
+.card{
+    height: 25vw;
+    float:left;
+    margin:0% 3vw 3vw 0%;
+}
+.card-img-top{
+    width: 20vw;
+    height: 25vh;
+}
+hr{
+    opacity: 1;
+    border:0%;
+    border-color: aliceblue;
+}
