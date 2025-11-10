@@ -43,6 +43,11 @@ pip install django
 ```powershell
 python manage.py migrate
 ```
+**Note:** The database file (`db.sqlite3`) is **not included** in this repository. It will be created when you run the `migrate` command above. If you need to create migrations for model changes, use:
+
+```powershell
+python manage.py makemigrations
+```
 
 4. (Optional) Create a superuser to access the admin site:
 
